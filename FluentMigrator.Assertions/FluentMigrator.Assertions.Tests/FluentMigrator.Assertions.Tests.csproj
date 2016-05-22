@@ -68,15 +68,17 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Helpers\UpOnlyMigration.cs" />
     <Compile Include="Setup\ConnectionStrings.cs" />
     <Compile Include="Setup\MigrationOptions.cs" />
     <Compile Include="Setup\RunnerContainer.cs" />
     <Compile Include="Setup\SqlExecutor.cs" />
     <Compile Include="Setup\IntegrationTestBase.cs" />
-    <Compile Include="Tests\IntegrationTest.cs" />
+    <Compile Include="Tests\StoredProcedureTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Setup\FluentMigratorAssertions.bak">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -87,6 +89,12 @@
       <Project>{00b1dd9c-002e-44d2-a163-6053182bbfc9}</Project>
       <Name>FluentMigrator.Assertions</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\CustOrderHistDefinition.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\CustOrderHistDefinitionWrong.sql" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
