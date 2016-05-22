@@ -7,8 +7,8 @@
     <ProjectGuid>{00B1DD9C-002E-44D2-A163-6053182BBFC9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FluentMigrator.Helpers</RootNamespace>
-    <AssemblyName>FluentMigrator.Helpers</AssemblyName>
+    <RootNamespace>FluentMigrator.Assertions</RootNamespace>
+    <AssemblyName>FluentMigrator.Assertions</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

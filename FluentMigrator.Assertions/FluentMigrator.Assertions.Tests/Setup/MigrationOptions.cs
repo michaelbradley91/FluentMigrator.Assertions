@@ -1,4 +1,4 @@
-namespace FluentMigrator.Helpers.Tests.Setup
+namespace FluentMigrator.Assertions.Tests.Setup
 {
     public class MigrationOptions : IMigrationProcessorOptions
     {

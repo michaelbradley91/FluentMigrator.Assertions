@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
-using FluentMigrator.Helpers.Tests.Setup;
+using FluentMigrator.Assertions.Tests.Setup;
 using NUnit.Framework;
 
-namespace FluentMigrator.Helpers.Tests.Tests
+namespace FluentMigrator.Assertions.Tests.Tests
 {
     [TestFixture]
     public class IntegrationTest : IntegrationTestBase

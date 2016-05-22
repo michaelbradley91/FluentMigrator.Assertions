@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace FluentMigrator.Helpers.Tests.Setup
+namespace FluentMigrator.Assertions.Tests.Setup
 {
     public class IntegrationTestBase
     {
@@ -9,6 +9,7 @@ namespace FluentMigrator.Helpers.Tests.Setup
         [SetUp]
         public void SetUpRunnerContainer()
         {
+            SqlExecutor.RestoreDatabase();
             RunnerContainer = RunnerContainer.Create();
         }
 

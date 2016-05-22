@@ -6,8 +6,8 @@
     <ProjectGuid>{B79D3020-B71B-401D-99E4-CE336E9205B8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FluentMigrator.Helpers.Tests</RootNamespace>
-    <AssemblyName>FluentMigrator.Helpers.Tests</AssemblyName>
+    <RootNamespace>FluentMigrator.Assertions.Tests</RootNamespace>
+    <AssemblyName>FluentMigrator.Assertions.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -68,7 +68,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Setup\Constants.cs" />
+    <Compile Include="Setup\ConnectionStrings.cs" />
     <Compile Include="Setup\MigrationOptions.cs" />
     <Compile Include="Setup\RunnerContainer.cs" />
     <Compile Include="Setup\SqlExecutor.cs" />
@@ -78,11 +78,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Setup\FluentMigratorHelpers.bak">
+    <None Include="Setup\FluentMigratorAssertions.bak">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\FluentMigrator.Assertions\FluentMigrator.Assertions.csproj">
+      <Project>{00b1dd9c-002e-44d2-a163-6053182bbfc9}</Project>
+      <Name>FluentMigrator.Assertions</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

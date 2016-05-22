@@ -3,18 +3,21 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Reflection;
 
-namespace FluentMigrator.Helpers.Tests.Setup
+namespace FluentMigrator.Assertions.Tests.Setup
 {
     public static class SqlExecutor
     {
+        private const string DatabaseName = "[FluentMigrator.Assertions]";
+        private const string BackupFilename = "FluentMigratorAssertions.bak";
+
         public static void RestoreDatabase()
         {
             var backupLocation = GetBackupLocation();
-            var sql = "ALTER DATABASE [FluentMigrator.Helpers] SET OFFLINE WITH ROLLBACK IMMEDIATE;" +
-                     $"RESTORE DATABASE [FluentMigrator.Helpers] FROM DISK ='{backupLocation}' WITH REPLACE;" +
-                      "ALTER DATABASE [FluentMigrator.Helpers] SET ONLINE";
+            var sql = $"ALTER DATABASE {DatabaseName} SET OFFLINE WITH ROLLBACK IMMEDIATE;" +
+                      $"RESTORE DATABASE {DatabaseName} FROM DISK ='{backupLocation}' WITH REPLACE;" +
+                      $"ALTER DATABASE {DatabaseName} SET ONLINE";
 
-            using (var sqlConnection = CreateConnection(Constants.MasterDbConnectionString))
+            using (var sqlConnection = CreateConnection(ConnectionStrings.MasterDbConnectionString))
             using (var sqlCommand = new SqlCommand(sql, sqlConnection))
             {
                 sqlConnection.Open();
@@ -28,7 +31,7 @@ namespace FluentMigrator.Helpers.Tests.Setup
             var dllPath = Assembly.GetExecutingAssembly().CodeBase.Substring("File:///".Length);
             // ReSharper disable once PossibleNullReferenceException
             var directoryPath = new FileInfo(dllPath).Directory.FullName;
-            var backupPath = Path.Combine(directoryPath, "Setup", "FluentMigratorHelpers.bak");
+            var backupPath = Path.Combine(directoryPath, "Setup", BackupFilename);
             return backupPath;
         }
 
@@ -74,7 +77,7 @@ namespace FluentMigrator.Helpers.Tests.Setup
             return 0 != ExecuteScalar<int>($"SELECT COUNT(*) FROM information_schema.tables WHERE table_name = '{table}'");
         }
 
-        private static SqlConnection CreateConnection(string connectionString = Constants.FluentMigratorDbConnectionString)
+        private static SqlConnection CreateConnection(string connectionString = ConnectionStrings.FluentMigratorDbConnectionString)
         {
             return new SqlConnection(connectionString);
         }

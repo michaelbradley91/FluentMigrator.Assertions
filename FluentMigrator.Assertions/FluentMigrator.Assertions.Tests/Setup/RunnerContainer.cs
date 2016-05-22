@@ -6,7 +6,7 @@ using FluentMigrator.Runner;
 using FluentMigrator.Runner.Announcers;
 using FluentMigrator.Runner.Initialization;
 
-namespace FluentMigrator.Helpers.Tests.Setup
+namespace FluentMigrator.Assertions.Tests.Setup
 {
     public class RunnerContainer : IDisposable
     {
@@ -54,7 +54,7 @@ namespace FluentMigrator.Helpers.Tests.Setup
             var options = new MigrationOptions { PreviewOnly = false, Timeout = 60 };
             var factory = new Runner.Processors.SqlServer.SqlServer2008ProcessorFactory();
 
-            var processor = factory.Create(Constants.FluentMigratorDbConnectionString, announcer, options);
+            var processor = factory.Create(ConnectionStrings.FluentMigratorDbConnectionString, announcer, options);
             var runner = new MigrationRunner(assembly, migrationContext, processor);
             return new RunnerContainer(processor, runner);
         }
