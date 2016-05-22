@@ -72,7 +72,8 @@
     <Compile Include="Setup\MigrationOptions.cs" />
     <Compile Include="Setup\RunnerContainer.cs" />
     <Compile Include="Setup\SqlExecutor.cs" />
-    <Compile Include="Tests\Test.cs" />
+    <Compile Include="Setup\IntegrationTestBase.cs" />
+    <Compile Include="Tests\IntegrationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

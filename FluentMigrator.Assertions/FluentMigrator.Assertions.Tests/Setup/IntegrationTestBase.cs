@@ -2,7 +2,7 @@
 
 namespace FluentMigrator.Helpers.Tests.Setup
 {
-    public class TestBase
+    public class IntegrationTestBase
     {
         protected RunnerContainer RunnerContainer;
 
