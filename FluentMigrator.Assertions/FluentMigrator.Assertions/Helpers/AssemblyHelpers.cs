@@ -1,19 +1,32 @@
-﻿using System.Diagnostics;
+﻿using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 
 namespace FluentMigrator.Assertions.Helpers
 {
     public static class AssemblyHelpers
     {
+        private static string DefaultEmbeddedResourceNamespace => ConfigurationManager.AppSettings["FluentMigrator.Assertions.DefaultEmbeddedResourceNamespace"];
+
         public static string GetEmbeddedResource(this Assembly assembly, string resource)
         {
-            using (var stream = assembly.GetManifestResourceStream(resource))
-            // ReSharper disable once AssignNullToNotNullAttribute
-            using (var reader = new StreamReader(stream))
+            Stream stream = null;
+            try
             {
-                return reader.ReadToEnd();
+                stream = assembly.GetManifestResourceStream(resource);
+                if (stream == null && !string.IsNullOrEmpty(DefaultEmbeddedResourceNamespace))
+                {
+                    stream = assembly.GetManifestResourceStream($"{DefaultEmbeddedResourceNamespace}.{resource}");
+                }
+                // ReSharper disable once AssignNullToNotNullAttribute
+                using (var reader = new StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
             }
         }
     }
