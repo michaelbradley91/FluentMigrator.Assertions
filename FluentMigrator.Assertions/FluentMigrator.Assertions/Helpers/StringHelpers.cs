@@ -1,0 +1,11 @@
+﻿namespace FluentMigrator.Assertions.Helpers
+{
+    public static class StringHelpers
+    {
+        public static string SurroundWithBrackets(string str)
+        {
+            if (str.StartsWith("[") && str.EndsWith("]")) return str;
+            return "[" + str + "]";
+        }
+    }
+}
