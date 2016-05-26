@@ -47,8 +47,9 @@
   <ItemGroup>
     <Compile Include="Assertions\MigrationAssert.cs" />
     <Compile Include="Assertions\StoredProcedureAssert.cs" />
-    <Compile Include="Helpers\AssertionHelpers.cs" />
+    <Compile Include="Helpers\SqlHelpers.cs" />
     <Compile Include="Helpers\AssemblyHelpers.cs" />
+    <Compile Include="Helpers\MigrationHelpers.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

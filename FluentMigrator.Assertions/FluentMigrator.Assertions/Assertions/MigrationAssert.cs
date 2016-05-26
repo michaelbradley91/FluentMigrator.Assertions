@@ -18,10 +18,8 @@ namespace FluentMigrator.Assertions.Assertions
 
         public IStoredProcedureAssert StoredProcedureExists(string storedProcedureName)
         {
-            var safeStoredProcedureName = StringHelpers.SurroundWithBrackets(storedProcedureName);
-            var errorMessage = AssertionHelpers.CreateRaiseErrorSql($"Stored procedure {safeStoredProcedureName} does not exist");
-            migration.Execute.Sql($"IF OBJECT_ID(N'{safeStoredProcedureName}', N'P') IS NULL " +
-                                  $"BEGIN {errorMessage} END;");
+            migration.Assert($"OBJECT_ID(N'{storedProcedureName.EscapeApostraphes().SurroundWithBrackets()}', N'P') IS NULL",
+                             $"Stored procedure {storedProcedureName} does not exist");
 
             return new StoredProcedureAssert(migration, storedProcedureName);
         }

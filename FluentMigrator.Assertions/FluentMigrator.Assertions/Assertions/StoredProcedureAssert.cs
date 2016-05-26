@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.CodeDom;
+using System.Linq;
 using System.Reflection;
 using FluentMigrator.Assertions.Helpers;
 
@@ -22,12 +23,14 @@ namespace FluentMigrator.Assertions.Assertions
 
         public void WithDefinition(string embeddedStoredProcedureDefinition)
         {
-            var definition = migration.GetType().Assembly.GetEmbeddedResource(embeddedStoredProcedureDefinition);
-            var escapedDefinition = definition.Replace("'", "''");
-            var safeStoredProcedureName = StringHelpers.SurroundWithBrackets(storedProcedureName);
-            var errorMessage = AssertionHelpers.CreateRaiseErrorSql($"Stored procedure {safeStoredProcedureName} definition did not match.");
-            migration.Execute.Sql($"IF REPLACE(REPLACE(OBJECT_DEFINITION(OBJECT_ID(N'{safeStoredProcedureName}')),CHAR(10),''),CHAR(13),'') != REPLACE(REPLACE('{escapedDefinition}',CHAR(10),''),CHAR(13),'') " +
-                                  $"BEGIN {errorMessage} END;");
+            var escapedEmbeddedDefinition = migration.GetEmbeddedResource(embeddedStoredProcedureDefinition).EscapeApostraphes();
+            var escapedStoredProcedureName = storedProcedureName.EscapeApostraphes().SurroundWithBrackets();
+
+            var storedDefinitonSql = SqlHelpers.CreateRemoveNewLinesSql($"OBJECT_DEFINITION(OBJECT_ID(N'{escapedStoredProcedureName}'))");
+            var embeddedDefinitionSql = SqlHelpers.CreateRemoveNewLinesSql($"'{escapedEmbeddedDefinition}'");
+
+            migration.Assert($"{storedDefinitonSql} != {embeddedDefinitionSql}",
+                             $"Stored procedure {storedProcedureName} definition did not match.");
         }
     }
 }
