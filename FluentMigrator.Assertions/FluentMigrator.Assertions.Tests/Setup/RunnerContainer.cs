@@ -18,7 +18,7 @@ namespace FluentMigrator.Assertions.Tests.Setup
         public RunnerContainer(IMigrationProcessor processor, MigrationRunner runner)
         {
             this.processor = processor;
-            this.Runner = runner;
+            Runner = runner;
             migrations = new Stack<IMigration>();
         }
 

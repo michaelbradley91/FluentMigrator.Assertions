@@ -5,18 +5,18 @@ namespace FluentMigrator.Assertions.Tests.Helpers
 {
     public class UpOnlyMigration : Migration
     {
-        private readonly MigrationAssert assert;
-        private readonly Action<Migration, MigrationAssert> up;
+        private readonly MigrationAssertor assertor;
+        private readonly Action<Migration, MigrationAssertor> up;
 
-        public UpOnlyMigration(Action<Migration, MigrationAssert> up)
+        public UpOnlyMigration(Action<Migration, MigrationAssertor> up)
         {
-            assert = new MigrationAssert(this);
+            assertor = new MigrationAssertor(this);
             this.up = up;
         }
 
         public override void Up()
         {
-            up(this, assert);
+            up(this, assertor);
         }
 
         public override void Down()
