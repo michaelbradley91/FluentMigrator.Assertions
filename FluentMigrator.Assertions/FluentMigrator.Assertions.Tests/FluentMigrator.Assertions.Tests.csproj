@@ -90,6 +90,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Examples\UpdateStoredProcedureExample.cs" />
     <Compile Include="Helpers\UpOnlyMigration.cs" />
     <Compile Include="Setup\ConnectionStrings.cs" />
     <Compile Include="Setup\MigrationOptions.cs" />
@@ -118,9 +119,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Scripts\CustOrderHistDefinitionWrong.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Examples\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
       <Visible>False</Visible>
