@@ -26,6 +26,7 @@ We had a fairly large database with huge stored procedures. We updated these pro
 ```c#
 public class UpdateStoredProcedureExample : Migration
 {
+    private const string ProcedureName = "MyProcedure";
     private const string NewProcedureDefinition = "NewProcedure.sql";
     private const string OldProcedureDefinition = "OldProcedure.sql";
 
