@@ -13,7 +13,7 @@ When running a migration against a database, it is nice to assume that all chang
 
 In larger applications it is often the case that many different parts of a business, or even different companies, try to share the same database. Therefore, stating you know what the database looks like before you run your migrations is reckless, and if you're wrong, your migration could have disastrous consequences! You could manually check the database beforehand, but this would require much care and you could easily miss something.
 
-Instead, you should **use assertions** within the transactions surrounding your migrations! You need not just hope that there are no rows with values x in column y - you can be certain of it. If your assertions fail, your migration simply won't run and you won't have corrupted your database. Your forward thinking when you wrote the migraton just saved the day. :D
+Instead, you should **use assertions** within the transactions surrounding your migrations! You need not just hope that there are no rows with values x in column y - you can be certain of it. If your assertions fail, your migration simply won't run and you won't have corrupted your database. Your forward thinking when you wrote the migraton just saved the day!
 
 Real Life Example
 -----------------
