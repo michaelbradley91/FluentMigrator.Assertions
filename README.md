@@ -88,4 +88,4 @@ However, the library does focus solely on assertions, so it will probably either
 * Prevent migrations which should be allowed to run from running.
 * Work perfectly! :)
 
-Note that it is unlikely to corrupt data abd so is relatively safe to use. Nevertheless if you do plan to use this package, please test your migrations as early as you can.
+Note that it is unlikely to corrupt data and so is relatively safe to use. Nevertheless if you do plan to use this package, please test your migrations as early as you can.
