@@ -45,7 +45,7 @@ public class UpdateStoredProcedureExample : Migration
 ```
 So we recorded the current definition for the stored procedure as well as our planned new definition. We simply removed the existing definition and replaced it with our own.
 
-As time passed and more people worked on the project in parallel, there was an incident where two people worked on the same stored procedure, but they didn't realise it. Lets say Alice took original procedure definition A, modified it and saved procedure definition B. Bob took original procedure definition A, modified it and saved the definition C. We then ran Alice's migration followed by Bob's migration. What went wrong?
+As time passed and more people worked on the project in parallel, there was an incident where two people worked on the same stored procedure, but they didn't realise it. Lets say Alice took the original procedure definition A, modified it and saved definition B. Bob also took the original definition A, modified it and saved the definition C. We then ran Alice's migration followed by Bob's migration. What went wrong?
 
 When Bob modified A, he didn't include Alice's changes in A. Therefore, when Bob dropped the procedure and replaced it with his own in the migration, he erased all of Alice's work. Needless to say this was a disaster and some rapid repairs had to be made... not a situation you should ever face.
 
