@@ -51,7 +51,7 @@ When Bob modified A, he didn't include Alice's changes. Therefore, when Bob drop
 
 **The Solution**
 
-Bob and Alice could have been saved if they had just used assertions. They should have checked that the procedure definition they were modifying really would be the one in the database when the migration ran. Expecting Bob and Alice to do this check manually is risky, as the task is complicated if there are many migrations to run in a release (+ Alice or Bob might just forget!).
+Bob and Alice could have been saved if they had just used assertions. They should have checked that the procedure definition they were modifying really would be the one in the database when the migration ran. Expecting Bob and Alice to do this check manually is risky, as the task is complicated if there are many migrations to run in a release (and Alice or Bob could just forget!).
 
 Instead, we should write our assumptions into the migrations. With this extension, we can do this as follows:
 ```c#
