@@ -18,9 +18,9 @@ Instead, you should **use assertions** within the transactions surrounding your 
 Real Life Example
 -----------------
 
-**The Problem**
-
 This is actually the inspiration for this package, and demonstrates when assertions can be very useful. I hope you find it interesting, and don't make the mistake my colleagues did...
+
+### The Problem
 
 We had a fairly large database with huge stored procedures. We updated these procedures by copy pasting the existing definition into our source control and then modifying it. Our migrations then looked roughly like this:
 ```c#
@@ -49,7 +49,7 @@ As time passed and more people worked on the project in parallel, there was an i
 
 When Bob modified A, he didn't include Alice's changes. Therefore, when Bob dropped the procedure and replaced it with his own in the migration, he erased all of Alice's work! Needless to say this was a big mistake and some rapid repairs had to be made... not a situation you should ever have to face.
 
-**The Solution**
+### The Solution
 
 Bob and Alice could have been saved if they had just used assertions. They should have checked that the procedure definition they were modifying really would be the one in the database when the migration ran. Expecting Bob and Alice to do this check manually is risky, as the task is complicated if there are many migrations to run in a release (and Alice or Bob could just forget!).
 
