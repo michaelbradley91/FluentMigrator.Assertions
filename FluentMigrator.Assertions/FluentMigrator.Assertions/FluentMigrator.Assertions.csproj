@@ -46,8 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assertions\MigrationAssertor.cs" />
+    <Compile Include="Assertions\FunctionAssert.cs" />
+    <Compile Include="Assertions\ObjectAssert.cs" />
+    <Compile Include="Contexts\ObjectMigrationContext.cs" />
+    <Compile Include="Contexts\FunctionMigrationContext.cs" />
+    <Compile Include="Assertions\MigrationAssert.cs" />
     <Compile Include="Assertions\StoredProcedureAssert.cs" />
+    <Compile Include="Constants\FunctionType.cs" />
+    <Compile Include="Constants\ObjectType.cs" />
+    <Compile Include="Contexts\MigrationContext.cs" />
+    <Compile Include="Contexts\StoredProcedureMigrationContext.cs" />
+    <Compile Include="Helpers\ReflectionHelpers.cs" />
     <Compile Include="Helpers\SqlHelpers.cs" />
     <Compile Include="Helpers\AssemblyHelpers.cs" />
     <Compile Include="Helpers\MigrationHelpers.cs" />
@@ -58,6 +67,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
