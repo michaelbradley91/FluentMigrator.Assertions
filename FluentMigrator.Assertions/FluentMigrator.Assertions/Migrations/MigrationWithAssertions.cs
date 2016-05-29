@@ -4,11 +4,11 @@ namespace FluentMigrator.Assertions.Migrations
 {
     public abstract class MigrationWithAssertions : Migration
     {
-        protected readonly MigrationAssertor Assert;
+        protected readonly MigrationAssert Assert;
 
         protected MigrationWithAssertions()
         {
-            Assert = new MigrationAssertor(this);
+            Assert = new MigrationAssert(this);
         }
     }
 }
