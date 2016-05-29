@@ -38,7 +38,7 @@ namespace FluentMigrator.Assertions.Tests.Tests
         {
             RunnerContainer.MigrateUp(new UpOnlyMigration((m, a) =>
             {
-                a.StoredProcedureExists("CustOrderHist").WithDefinition("CustOrderHistDefinition.sql");
+                a.StoredProcedureExists("CustOrderHist").WithDefinitionFromEmbeddedResource("CustOrderHistDefinition.sql");
                 m.Create.Table("Hello").WithColumn("Id").AsInt32().PrimaryKey();
             }));
             SqlExecutor.TableExists("Hello").Should().BeTrue();
@@ -50,7 +50,7 @@ namespace FluentMigrator.Assertions.Tests.Tests
             Assert.Throws<Exception>(() => RunnerContainer.MigrateUp(new UpOnlyMigration((m, a) =>
             {
                 m.Create.Table("Hello").WithColumn("Id").AsInt32().PrimaryKey();
-                a.StoredProcedureExists("CustOrderHist").WithDefinition("CustOrderHistDefinitionWrong.sql");
+                a.StoredProcedureExists("CustOrderHist").WithDefinitionFromEmbeddedResource("CustOrderHistDefinitionWrong.sql");
                 m.Create.Table("World").WithColumn("Id").AsInt32().PrimaryKey();
             })));
             SqlExecutor.TableExists("Hello").Should().BeFalse();

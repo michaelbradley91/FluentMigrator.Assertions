@@ -1,10 +1,14 @@
-﻿using FluentMigrator.Assertions.Contexts;
+﻿using System.IO;
+using FluentMigrator.Assertions.Contexts;
 
 namespace FluentMigrator.Assertions.Assertions
 {
     public interface IObjectAssert
     {
         void WithDefinition(string embeddedDefinition);
+        void WithDefinitionFromString(string definition);
+        void WithDefinitionFromEmbeddedResource(string embeddedDefinition);
+        void WithDefinitionFromFile(string filePath);
     }
 
     public class ObjectAssert : IObjectAssert
@@ -16,9 +20,24 @@ namespace FluentMigrator.Assertions.Assertions
             this.context = context;
         }
 
-        public void WithDefinition(string embeddedDefinition)
+        public void WithDefinition(string definition)
         {
-            context.AssertDefinitionsAreEqual(context.ObjectName, context.ObjectType, embeddedDefinition);
+            context.AssertDefinitionsAreEqual(context.ObjectName, context.ObjectType, definition);
+        }
+
+        public void WithDefinitionFromString(string definition)
+        {
+            WithDefinition(definition);
+        }
+
+        public void WithDefinitionFromEmbeddedResource(string embeddedDefinition)
+        {
+            context.AssertDefinitionsAreEqual(context.ObjectName, context.ObjectType, context.GetEmbeddedResource(embeddedDefinition));
+        }
+
+        public void WithDefinitionFromFile(string filePath)
+        {
+            context.AssertDefinitionsAreEqual(context.ObjectName, context.ObjectType, File.ReadAllText(filePath));
         }
     }
 }
