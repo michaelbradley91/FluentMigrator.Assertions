@@ -11,25 +11,25 @@ namespace FluentMigrator.Assertions.Assertions
 
     public class MigrationAssert : IMigrationAssert
     {
-        private readonly MigrationContext context;
+        public MigrationContext Context { get; }
 
         public MigrationAssert(Migration migration) : this(new MigrationContext(migration)) { }
 
         public MigrationAssert(MigrationContext context)
         {
-            this.context = context;
+            Context = context;
         }
 
         public void IsTrue(string condition)
         {
-            context.Assert(condition, "The condition was not met.");
+            Context.Assert(condition, "The condition was not met.");
         }
 
         public IStoredProcedureAssert StoredProcedureExists(string storedProcedureName)
         {
             AssertObjectExists(storedProcedureName, ObjectType.StoredProcedure);
 
-            var newContext = new StoredProcedureMigrationContext(context, storedProcedureName);
+            var newContext = new StoredProcedureMigrationContext(Context, storedProcedureName);
             return new StoredProcedureAssert(newContext);
         }
 
@@ -37,7 +37,7 @@ namespace FluentMigrator.Assertions.Assertions
         {
             AssertObjectExists(functionName, functionType.ToObjectType());
 
-            var newContext = new FunctionMigrationContext(context, functionName, functionType);
+            var newContext = new FunctionMigrationContext(Context, functionName, functionType);
             return new FunctionAssert(newContext);
         }
 
@@ -45,13 +45,13 @@ namespace FluentMigrator.Assertions.Assertions
         {
             AssertObjectExists(objectName, objectType);
 
-            var newContext = new ObjectMigrationContext(context, objectName, objectType);
+            var newContext = new ObjectMigrationContext(Context, objectName, objectType);
             return new ObjectAssert(newContext);
         }
 
         private void AssertObjectExists(string objectName, ObjectType objectType)
         {
-            context.Assert($"OBJECT_ID(N'{objectName.EscapeApostraphes().SurroundWithBrackets()}', " +
+            Context.Assert($"OBJECT_ID(N'{objectName.EscapeApostraphes().SurroundWithBrackets()}', " +
                            $"N'{objectType.ToSqlIdentifier()}') IS NULL",
                            $"Object {objectName} does not exist");
         }
@@ -60,7 +60,7 @@ namespace FluentMigrator.Assertions.Assertions
         {
             AssertPrincipalExists(name, PrincipalType.Database);
 
-            var newContext = new DatabasePrincipalMigrationContext(context, name);
+            var newContext = new DatabasePrincipalMigrationContext(Context, name);
             return new DatabasePrincipalAssert(newContext);
         }
 
@@ -68,14 +68,14 @@ namespace FluentMigrator.Assertions.Assertions
         {
             AssertPrincipalExists(name, PrincipalType.Server);
 
-            var newContext = new ServerPrincipalMigrationContext(context, name);
+            var newContext = new ServerPrincipalMigrationContext(Context, name);
             return new ServerPrincipalAssert(newContext);
         }
 
         private void AssertPrincipalExists(string name, PrincipalType principalType)
         {
             var escapedName = name.EscapeApostraphes();
-            context.Assert($"(SELECT COUNT(*) FROM {principalType.GetUsersTable()} WHERE name = '{escapedName}') > 0",
+            Context.Assert($"(SELECT COUNT(*) FROM {principalType.GetUsersTable()} WHERE name = '{escapedName}') > 0",
                            $"User {name} does not exist.");
         }
     }

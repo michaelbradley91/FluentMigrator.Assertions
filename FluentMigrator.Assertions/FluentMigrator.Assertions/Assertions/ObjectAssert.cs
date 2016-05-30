@@ -15,16 +15,16 @@ namespace FluentMigrator.Assertions.Assertions
 
     public class ObjectAssert : IObjectAssert
     {
-        private readonly ObjectMigrationContext context;
+        public ObjectMigrationContext Context { get; }
         
         public ObjectAssert(ObjectMigrationContext context)
         {
-            this.context = context;
+            Context = context;
         }
 
         public void WithDefinition(string definition)
         {
-            AssertDefinitionsAreEqual(context.ObjectName, context.ObjectType, definition);
+            AssertDefinitionsAreEqual(Context.ObjectName, Context.ObjectType, definition);
         }
 
         public void WithDefinitionFromString(string definition)
@@ -34,12 +34,12 @@ namespace FluentMigrator.Assertions.Assertions
 
         public void WithDefinitionFromEmbeddedResource(string embeddedDefinition)
         {
-            AssertDefinitionsAreEqual(context.ObjectName, context.ObjectType, context.GetEmbeddedResource(embeddedDefinition));
+            AssertDefinitionsAreEqual(Context.ObjectName, Context.ObjectType, Context.GetEmbeddedResource(embeddedDefinition));
         }
 
         public void WithDefinitionFromFile(string filePath)
         {
-            AssertDefinitionsAreEqual(context.ObjectName, context.ObjectType, File.ReadAllText(filePath));
+            AssertDefinitionsAreEqual(Context.ObjectName, Context.ObjectType, File.ReadAllText(filePath));
         }
 
         private void AssertDefinitionsAreEqual(string objectName, ObjectType objectType, string definition)
@@ -51,7 +51,7 @@ namespace FluentMigrator.Assertions.Assertions
                                                                         $"N'{objectType.ToSqlIdentifier()}'))");
             var embeddedDefinitionSql = SqlHelpers.CreateRemoveNewLinesSql($"'{escapedDefinition}'");
 
-            context.Assert($"{storedDefinitonSql} != {embeddedDefinitionSql}",
+            Context.Assert($"{storedDefinitonSql} != {embeddedDefinitionSql}",
                            $"The definition of object {objectName} did not match the definition in the embedded resource.");
         }
     }

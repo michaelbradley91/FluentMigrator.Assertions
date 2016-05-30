@@ -11,23 +11,23 @@ namespace FluentMigrator.Assertions.Assertions
 
     public class PrincipalAssert : IPrincipalAssert
     {
-        private readonly PrincipalMigrationContext context;
+        public PrincipalMigrationContext Context { get; }
 
         public PrincipalAssert(PrincipalMigrationContext context)
         {
-            this.context = context;
+            Context = context;
         }
 
         public void WithRole(string role)
         {
-            var escapedName = context.PrincipalName.EscapeApostraphes();
+            var escapedName = Context.PrincipalName.EscapeApostraphes();
             var escapedRole = role.EscapeApostraphes();
 
-            context.Assert($"(SELECT COUNT(*) FROM {context.PrincipalType.GetRolesTable()} AS m " +
-                           $"INNER JOIN {context.PrincipalType.GetUsersTable()} AS r ON m.role_principal_id = r.principal_id " +
-                           $"INNER JOIN {context.PrincipalType.GetUsersTable()} AS u ON u.principal_id = m.member_principal_id " +
+            Context.Assert($"(SELECT COUNT(*) FROM {Context.PrincipalType.GetRolesTable()} AS m " +
+                           $"INNER JOIN {Context.PrincipalType.GetUsersTable()} AS r ON m.role_principal_id = r.principal_id " +
+                           $"INNER JOIN {Context.PrincipalType.GetUsersTable()} AS u ON u.principal_id = m.member_principal_id " +
                            $"WHERE r.name = '{escapedRole}' AND u.name = '{escapedName}') > 0",
-                           $"Principal {context.PrincipalName} did not have role {role}");
+                           $"Principal {Context.PrincipalName} did not have role {role}");
         }
     }
 }
