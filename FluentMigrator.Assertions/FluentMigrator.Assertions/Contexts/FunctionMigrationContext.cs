@@ -14,7 +14,7 @@ namespace FluentMigrator.Assertions.Contexts
             FunctionType = functionType;
         }
 
-        public FunctionMigrationContext(FunctionMigrationContext existingContext) :
+        protected FunctionMigrationContext(FunctionMigrationContext existingContext) :
             this(existingContext, existingContext.FunctionName, existingContext.FunctionType) { }
     }
 }

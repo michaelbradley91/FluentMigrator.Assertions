@@ -46,8 +46,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assertions\DatabasePrincipalAssert.cs" />
+    <Compile Include="Assertions\PrincipalAssert.cs" />
+    <Compile Include="Assertions\ServerPrincipalAssert.cs" />
+    <Compile Include="Contexts\PrincipalMigrationContext.cs" />
+    <Compile Include="Contexts\DatabasePrincipalMigrationContext.cs" />
     <Compile Include="Assertions\FunctionAssert.cs" />
     <Compile Include="Assertions\ObjectAssert.cs" />
+    <Compile Include="Contexts\ServerPrincipalMigrationContext.cs" />
+    <Compile Include="Constants\PrincipalType.cs" />
     <Compile Include="Contexts\ObjectMigrationContext.cs" />
     <Compile Include="Contexts\FunctionMigrationContext.cs" />
     <Compile Include="Assertions\MigrationAssert.cs" />

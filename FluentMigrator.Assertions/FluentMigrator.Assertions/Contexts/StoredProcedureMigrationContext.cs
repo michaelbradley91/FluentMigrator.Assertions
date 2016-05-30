@@ -12,7 +12,7 @@ namespace FluentMigrator.Assertions.Contexts
             StoredProcedureName = storedProcedureName;
         }
 
-        public StoredProcedureMigrationContext(StoredProcedureMigrationContext existingContext) :
+        protected StoredProcedureMigrationContext(StoredProcedureMigrationContext existingContext) :
             this(existingContext, existingContext.StoredProcedureName) { }
     }
 }

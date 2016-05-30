@@ -13,7 +13,7 @@ namespace FluentMigrator.Assertions.Contexts
             ObjectType = objectType;
         }
 
-        public ObjectMigrationContext(ObjectMigrationContext existingContext) 
+        protected ObjectMigrationContext(ObjectMigrationContext existingContext) 
             : this(existingContext, existingContext.ObjectName, existingContext.ObjectType) { }
     }
 }
