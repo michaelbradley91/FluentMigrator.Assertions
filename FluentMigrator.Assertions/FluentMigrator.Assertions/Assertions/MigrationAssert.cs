@@ -75,7 +75,7 @@ namespace FluentMigrator.Assertions.Assertions
         private void AssertPrincipalExists(string name, PrincipalType principalType)
         {
             var escapedName = name.EscapeApostraphes();
-            Context.Assert($"(SELECT COUNT(*) FROM {principalType.GetUsersTable()} WHERE name = '{escapedName}') > 0",
+            Context.Assert($"(SELECT COUNT(*) FROM {principalType.GetUsersTable()} WHERE name = '{escapedName}') = 0",
                            $"User {name} does not exist.");
         }
     }

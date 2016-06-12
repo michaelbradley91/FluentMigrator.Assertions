@@ -18,9 +18,21 @@ namespace FluentMigrator.Assertions.Contexts
             return Migration.GetEmbeddedResource(resourceName);
         }
 
-        public void Assert(string condition, string errorMessage)
+        public string GetAssertSql(string failureCondition, string errorMessage)
         {
-            Migration.Assert(condition, errorMessage);
+            var errorSql = SqlHelpers.CreateRaiseErrorSql(errorMessage);
+            return $"IF ({failureCondition}) BEGIN {errorSql} END;";
+        }
+
+        public void Assert(string failureCondition, string errorMessage)
+        {
+            var assertSql = GetAssertSql(failureCondition, errorMessage);
+            Execute(assertSql);
+        }
+
+        public void Execute(string sql)
+        {
+            Migration.Execute.Sql(sql);
         }
     }
 }

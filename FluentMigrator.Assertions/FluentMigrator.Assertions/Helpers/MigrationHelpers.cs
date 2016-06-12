@@ -6,11 +6,5 @@
         {
             return migration.GetType().Assembly.GetEmbeddedResource(resourceName);
         }
-
-        public static void Assert(this Migration migration, string condition, string errorMessage)
-        {
-            var errorSql = SqlHelpers.CreateRaiseErrorSql(errorMessage);
-            migration.Execute.Sql($"IF ({condition}) BEGIN {errorSql} END;");
-        }
     }
 }

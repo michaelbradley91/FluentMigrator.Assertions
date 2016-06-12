@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Data;
+using System.IO;
 using FluentMigrator.Assertions.Constants;
 using FluentMigrator.Assertions.Contexts;
 using FluentMigrator.Assertions.Helpers;
@@ -44,15 +45,21 @@ namespace FluentMigrator.Assertions.Assertions
 
         private void AssertDefinitionsAreEqual(string objectName, ObjectType objectType, string definition)
         {
+            string actualDefinitionVariableName;
+            string expectedDefinitionVariableName;
+
             var escapedDefinition = definition.EscapeApostraphes();
             var escapedObjectName = objectName.EscapeApostraphes().SurroundWithBrackets();
 
-            var storedDefinitonSql = SqlHelpers.CreateRemoveNewLinesSql($"OBJECT_DEFINITION(OBJECT_ID(N'{escapedObjectName}', " +
-                                                                        $"N'{objectType.ToSqlIdentifier()}'))");
-            var embeddedDefinitionSql = SqlHelpers.CreateRemoveNewLinesSql($"'{escapedDefinition}'");
+            var getActualDefinition = SqlHelpers.RemoveCommentsAndWhiteSpace(out actualDefinitionVariableName, 
+                $"OBJECT_DEFINITION(OBJECT_ID(N'{escapedObjectName}', N'{objectType.ToSqlIdentifier()}'))");
 
-            Context.Assert($"{storedDefinitonSql} != {embeddedDefinitionSql}",
-                           $"The definition of object {objectName} did not match the definition in the embedded resource.");
+            var getExpectedDefinition = SqlHelpers.RemoveCommentsAndWhiteSpace(out expectedDefinitionVariableName, $"'{escapedDefinition}'");
+            
+            var assert = Context.GetAssertSql($"@{actualDefinitionVariableName} != @{expectedDefinitionVariableName}",
+                $"The definition of object {objectName} did not match the definition in the embedded resource.");
+
+            Context.Execute(string.Join("\r\n", getActualDefinition, getExpectedDefinition, assert));
         }
     }
 }

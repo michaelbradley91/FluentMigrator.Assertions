@@ -97,7 +97,11 @@
     <Compile Include="Setup\RunnerContainer.cs" />
     <Compile Include="Setup\SqlExecutor.cs" />
     <Compile Include="Setup\IntegrationTestBase.cs" />
-    <Compile Include="Tests\StoredProcedureTests.cs" />
+    <Compile Include="Tests\DatabasePrincipalAssertTests.cs" />
+    <Compile Include="Tests\ServerPrincipalAssertTests.cs" />
+    <Compile Include="Tests\ObjectAssertTests.cs" />
+    <Compile Include="Tests\FunctionAssertTests.cs" />
+    <Compile Include="Tests\StoredProcedureAssertTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
