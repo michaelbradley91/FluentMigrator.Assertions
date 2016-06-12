@@ -8,17 +8,13 @@ namespace FluentMigrator.Assertions.Helpers
         {
             return $"RAISERROR('{errorMessage.EscapeApostraphes()}', 15, -1); RETURN";
         }
-
-        public static string CreateRemoveNewLinesSql(string sqlString)
-        {
-            return $"REPLACE(REPLACE({sqlString}, CHAR(10), ''), CHAR(13), '')";
-        }
-
-        public static string RemoveCommentsAndWhiteSpace(out string variableName, string str)
+        
+        public static string RemoveCommentsAndWhiteSpace(out string variableName, string sqlString)
         {
             variableName = "X" + Guid.NewGuid().ToString("N");
             return $@"
 DECLARE @CodeBlockStart{variableName} int, @CodeBlockEnd{variableName} int, @{variableName} varchar(max)
+SET @{variableName} = {sqlString}
 SET @CodeBlockStart{variableName} = PATINDEX('%/*%', @{variableName})
 
 WHILE @CodeBlockStart{variableName} > 0
