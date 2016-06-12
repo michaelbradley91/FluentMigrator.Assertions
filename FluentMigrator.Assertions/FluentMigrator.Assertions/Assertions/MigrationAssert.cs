@@ -119,7 +119,7 @@ namespace FluentMigrator.Assertions.Assertions
         private void AssertColumnExists(string name)
         {
             var escapedColumnName = name.EscapeApostraphes().SurroundWithBrackets();
-            Context.Assert($"(SELECT COUNT(*) FROM sys.columns WHERE Name = N'{escapedColumnName}' AND Object_ID = Object_ID(N'{Context.EscapedTableName}'))",
+            Context.Assert($"(SELECT COUNT(*) FROM sys.columns WHERE Name = N'{escapedColumnName}' AND Object_ID = Object_ID(N'{Context.EscapedTableName}')) = 0",
                            $"Column {name} does not exist.");
         }
     }
@@ -135,6 +135,19 @@ namespace FluentMigrator.Assertions.Assertions
         public ColumnAssert(ColumnMigrationContext context)
         {
             Context = context;
+        }
+
+        public void OfType(string type)
+        {
+            Context.Assert($@"(
+            SELECT * 
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE
+                 TABLE_NAME = '{Context.EscapedTableName}' AND 
+                 COLUMN_NAME = '{Context.EscapedColumnName}' AND
+	             DATA_TYPE = '{type}' AND
+	             TABLE_SCHEMA = SCHEMA_NAME()
+            ) = 0", $"Column {Context.ColumnName} does not have type {type}.");
         }
     }
 
