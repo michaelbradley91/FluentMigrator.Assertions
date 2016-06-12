@@ -74,9 +74,92 @@ namespace FluentMigrator.Assertions.Assertions
 
         private void AssertPrincipalExists(string name, PrincipalType principalType)
         {
-            var escapedName = name.EscapeApostraphes();
+            var escapedName = name.EscapeApostraphes().SurroundWithBrackets();
             Context.Assert($"(SELECT COUNT(*) FROM {principalType.GetUsersTable()} WHERE name = '{escapedName}') = 0",
                            $"User {name} does not exist.");
         }
+
+        public ITableAssert TableExists(string name)
+        {
+            AssertTableExists(name);
+
+            var newContext = new TableMigrationContext(Context, name);
+            return new TableAssert(newContext);
+        }
+
+        private void AssertTableExists(string name)
+        {
+            var escapedName = name.EscapeApostraphes().SurroundWithBrackets();
+            Context.Assert($"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = SCHEMA_NAME() AND TABLE_NAME = '{escapedName}') = 0",
+                           $"Table {name} does not exist.");
+        }
+    }
+
+    public interface ITableAssert
+    {
+    }
+
+    public class TableAssert : ITableAssert
+    {
+        public TableMigrationContext Context { get; }
+
+        public TableAssert(TableMigrationContext context)
+        {
+            Context = context;
+        }
+
+        public IColumnAssert WithColumn(string name)
+        {
+            AssertColumnExists(name);
+
+            var newContext = new ColumnMigrationContext(Context, name);
+            return new ColumnAssert(newContext);
+        }
+
+        private void AssertColumnExists(string name)
+        {
+            var escapedColumnName = name.EscapeApostraphes().SurroundWithBrackets();
+            Context.Assert($"(SELECT COUNT(*) FROM sys.columns WHERE Name = N'{escapedColumnName}' AND Object_ID = Object_ID(N'{Context.EscapedTableName}'))",
+                           $"Column {name} does not exist.");
+        }
+    }
+
+    public interface IColumnAssert
+    {
+    }
+
+    public class ColumnAssert : IColumnAssert
+    {
+        public ColumnMigrationContext Context { get; }
+
+        public ColumnAssert(ColumnMigrationContext context)
+        {
+            Context = context;
+        }
+    }
+
+    public class ColumnMigrationContext : TableMigrationContext
+    {
+        public string ColumnName { get; }
+        public string EscapedColumnName => ColumnName.EscapeApostraphes().SurroundWithBrackets();
+
+        public ColumnMigrationContext(TableMigrationContext context, string name) : base(context)
+        {
+            ColumnName = name;
+        }
+    }
+
+    public class TableMigrationContext : MigrationContext
+    {
+        public string TableName { get; }
+        public string EscapedTableName => TableName.EscapeApostraphes().SurroundWithBrackets();
+
+        public TableMigrationContext(TableMigrationContext context) : this(context, context.TableName) { }
+
+        public TableMigrationContext(MigrationContext context, string tableName) : base(context)
+        {
+            TableName = tableName;
+        }
     }
 }
+
