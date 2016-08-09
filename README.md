@@ -18,7 +18,7 @@ Instead, you should **use assertions** within the transactions surrounding your 
 Real Life Example
 -----------------
 
-This is actually the inspiration for this package, and demonstrates when assertions can be very useful. I hope you find it interesting, and don't make the mistake my colleagues did...
+This is actually the inspiration for this package, and demonstrates when assertions can be very useful.
 
 ### The Problem
 
